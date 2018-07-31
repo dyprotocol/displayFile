@@ -1,8 +1,23 @@
+//************************************************************************
+//  DisplayFile.java       Author: Lewis/Loftus
+//
+//  Demonstrates the use of a file chooser dialog box and a text area.
+//************************************************************************
+//  CLASS:    	OBJECT-ORIENTED PROGRAMMING I  
+//	GROUP:	  	GROUP 3
+//  MEMBERS:	CHRIS / DOUA / SAMUEL
+//	PROJECT:	CHAPTER 11; PROGRAMMING PROJECT 11.7
+//************************************************************************
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+	Write a JavaFX application based on the DisplayFile program from
+	Chapter 9.  In addition to opening and displaying a file, allow the 
+	user to modify the text in the text area.  Provide a Save button that,
+	when pressed, displays a dialog box that lets the user save the 
+	modifications to a file.  Hint: use the showSaveDialog method of the 
+	FileChooser class and use a try-catch statement to handle any exceptions
+	that occur during the process of writing the file.
+*/
+
 package displayfile;
 
 import javafx.application.Application;
