@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Scanner;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -18,6 +17,10 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.event.EventHandler;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 
 //************************************************************************
 //  CLASS:    	OBJECT-ORIENTED PROGRAMMING I  
@@ -37,10 +40,26 @@ public class DisplayFile extends Application {
 
         FileChooser chooser = new FileChooser();
         File selectedFile = chooser.showOpenDialog(primaryStage);
-
+        
+        Label saveLabel = new Label();
+        saveLabel.setText("Changes hve been saved.");
+        saveLabel.setFont(new Font("Courier", 14));
+        saveLabel.setTextFill(Color.GREEN);
+        saveLabel.setAlignment(Pos.CENTER);
+        saveLabel.setVisible(false);
+        
         TextArea content = new TextArea();
         content.setFont(new Font("Courier", 12));
         content.setEditable(true);
+        content.setWrapText(true);
+        
+        content.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<
+                KeyEvent>() {
+                    @Override
+                    public void handle(KeyEvent event){
+                        saveLabel.setVisible(false);
+                    }
+                });
 
         if (selectedFile == null) {
             content.setText("No file chosen.");
@@ -51,38 +70,25 @@ public class DisplayFile extends Application {
             while (scan.hasNext()) {
                 info += scan.nextLine() + "\n";
             }
-
             content.setText(info);
         }
+        
+        SAVE = new Button("Save");
 
-        SAVE = new Button("Enter");
-        HBox buttons = new HBox(SAVE);
-        buttons.setSpacing(10);
-        buttons.setPadding(new Insets(15, 0, 0, 0));
-        buttons.setAlignment(Pos.CENTER);
-
-        SAVE.setOnAction((ActionEvent event)
-                -> {
-            FileChooser fileChooser = new FileChooser();
-
-            //Show save file dialog
-            File file = fileChooser.showSaveDialog(primaryStage);
-
-            if (file != null) {
-                SaveFile(content.getText(), file);
-            }
-        }
-        );
+        SAVE.setOnAction((ActionEvent event) -> {
+            SaveFile(content.getText(), selectedFile);
+            saveLabel.setVisible(true);
+        });
 
         HBox pickers = new HBox(SAVE);
         pickers.setSpacing(15);
         pickers.setAlignment(Pos.CENTER);
 
         VBox root = new VBox();
-        root.setStyle("-fx-background-color: white");
+        root.setStyle("-fx-background-color: skyblue");
         root.setSpacing(20);
         root.setAlignment(Pos.CENTER);
-        root.getChildren().addAll(content, pickers);
+        root.getChildren().addAll(saveLabel, content, pickers);
 
         Scene scene = new Scene(root, 500, 500);
 
