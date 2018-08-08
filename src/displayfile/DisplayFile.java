@@ -42,6 +42,7 @@ public class DisplayFile extends Application {
         FileChooser chooser = new FileChooser();
         File selectedFile = chooser.showOpenDialog(primaryStage);
         
+        // Create and setup Label
         Label saveLabel = new Label();
         saveLabel.setText("Changes hve been saved.");
         saveLabel.setFont(new Font("Courier", 14));
@@ -49,6 +50,7 @@ public class DisplayFile extends Application {
         saveLabel.setAlignment(Pos.CENTER);
         saveLabel.setVisible(false);
         
+        // Create and setup TextArea
         TextArea content = new TextArea();
         content.setFont(new Font("Courier", 12));
         content.setEditable(true);
@@ -62,45 +64,49 @@ public class DisplayFile extends Application {
                     }
                 });
 
+        // Loop to find if a file was selected
         if (selectedFile == null) {
             content.setText("No file chosen.");
-        } else {
+        } // End if 
+        else {
             Scanner scan = new Scanner(selectedFile);
 
             String info = "";
             while (scan.hasNext()) {
                 info += scan.nextLine() + "\n";
-            }
+            } // End while
             
             content.setText(info);
-        }
+        } // End else
         
+        // Create button
         SAVE = new Button("Save");
-
         SAVE.setOnAction((ActionEvent event) -> {
             SaveFile(content.getText(), selectedFile);
             saveLabel.setVisible(true);
         });
 
+        // Setup HBox
         HBox pickers = new HBox(SAVE);
         pickers.setSpacing(15);
         pickers.setAlignment(Pos.CENTER);
 
+        // Setup VBox
         VBox root = new VBox();
         root.setStyle("-fx-background-color: skyblue");
         root.setSpacing(20);
         root.setAlignment(Pos.CENTER);
         root.getChildren().addAll(saveLabel, content, pickers);
 
+        // Create and setup Scene
         Scene scene = new Scene(root, 500, 500);
 
+        // Setup primaryStage
         primaryStage.setTitle("Display File");
-
         primaryStage.setScene(scene);
-
         primaryStage.show();
 
-    }
+    } // End start
 
     private void SaveFile(String content, File file) {
         try {
@@ -112,6 +118,6 @@ public class DisplayFile extends Application {
         } catch (IOException ex) {
             Logger.getLogger(DisplayFile.class
                     .getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-}
+        } // End catch
+    } // End SaveFile
+} // End DisplayFile
